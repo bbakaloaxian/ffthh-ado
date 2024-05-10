@@ -3,6 +3,14 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
+variables:
+- name: subscriptionName
+  value: 'Azure Sponsor Sandbox'
+- name: storageAccount
+  value: 'ffthhstoragebbakalo'
+- name: storageContainer
+  value: '$web'
+
 trigger:
 - main
 
