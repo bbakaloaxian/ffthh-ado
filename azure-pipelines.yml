@@ -5,7 +5,7 @@
 
 variables:
 - name: subscriptionName
-  value: 'Azure Sponsor Sandbox'
+  value: 'AzureServiceConnection'
 - name: storageAccount
   value: 'ffthhstoragebbakalo'
 - name: storageContainer
