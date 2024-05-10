@@ -21,7 +21,7 @@ steps:
   displayName: 'yarn install and build'
 - task: AzureCLI@2
   inputs:
-    azureSubscription: '$(subscriptionName)'
+    azureSubscription: 'AzureServiceConnection'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
