@@ -18,15 +18,7 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '20.x'
-  displayName: 'Install Node.js'
-
-- script: |
-    yarn
-    yarn build
-  displayName: 'yarn install and build'
+- template: templates/n-yarn-install-buid-template.yml
 
 - task: AzureCLI@2
   displayName: Upload to Azure Storage Account
