@@ -1,0 +1,38 @@
+# Node.js with React
+# Build a Node.js project that uses React.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+variables:
+- name: subscriptionName
+  value: 'AzureServiceConnection'
+- name: storageAccount
+  value: 'ffthhstoragebbakalo'
+- name: storageContainer
+  value: '$web'
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- template: templates/n-yarn-install-buid-template.yml
+
+- task: AzureCLI@2
+  displayName: Upload to Azure Storage Account
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  inputs:
+    azureSubscription: '$(subscriptionName)'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      echo "STEP: Setup"
+      az --version
+      az account show
+      az config set extension.use_dynamic_install=yes_without_prompt
+      echo "STEP: Removing blobs from storage"
+      az storage azcopy blob delete -c '$(storageContainer)' --account-name '$(storageAccount)' --recursive
+      echo "STEP: Uploading blobs to storage"
+      az storage azcopy blob upload -c '$(storageContainer)' --account-name '$(storageAccount)' -s "build/*" --recursive
